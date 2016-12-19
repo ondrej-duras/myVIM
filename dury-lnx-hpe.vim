@@ -1,6 +1,6 @@
 "
 " DURY.VIM - My Personal VIM Configuration - Windows Version
-" 20140625, kpt. Ing. Ondrej DURAS (dury)
+" 20140625, Ing. Ondrej DURAS (dury)
 " $VIM/dury.vim
 "
 " Common Variables & Settings ######################################### {{{ 1

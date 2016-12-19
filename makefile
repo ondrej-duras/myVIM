@@ -1,6 +1,6 @@
 #
 # MAKEFILE of HPSA-Utilities project
-# 20160501, Ing. Ondrej DURAS, kpt. v zal.
+# 20160501, Ing. Ondrej DURAS, 
 # ~/prog/HPSA-Utilities/makefile
 # VERSION=2016.090101
 #

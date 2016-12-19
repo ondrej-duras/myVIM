@@ -1,6 +1,6 @@
 " 
 " PASS.VIM - Handling Passwords
-" 20150204, Ing. Ondrej DURAS Capt (Ret.)
+" 20150204, Ing. Ondrej DURAS 
 " $VIM/pass.vim
 "
 

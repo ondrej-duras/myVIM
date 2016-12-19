@@ -1,6 +1,6 @@
 " 
 " START.VIM - Starts predefined commands <Ctrl+A>
-" 20150204, Ing. Ondrej DURAS Capt (Ret.)
+" 20150204, Ing. Ondrej DURAS
 " $VIM/start.vim
 "
 

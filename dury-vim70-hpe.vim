@@ -5,7 +5,7 @@
 "
 " Common Variables & Settings ######################################### {{{ 1
 
-let AUTHOR="Ing. Ondrej DURAS Capt. (Ret.), +421-2-692-57912"
+let AUTHOR="Ing. Ondrej DURAS, +421-2-692-57912"
 let COMMENTOR="#"
 let FOLDMARKS=70
 let EXTENSION=tolower(expand("%:e"))

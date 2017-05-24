@@ -2,12 +2,12 @@
 " DURY.VIM - My Personal VIM Configuration - Windows Version
 " 20140625, Ing. Ondrej DURAS (dury)
 " $VIM/dury.vim
-" VERSION=20161219
+" VERSION=20170524
 "
 " Common Variables & Settings ######################################### {{{ 1
 
 "let AUTHOR="Ing. Ondrej DURAS, +421-2-692-57912  ATT"
-let AUTHOR="Ing. Ondrej DURAS, HPe"
+let AUTHOR="Ing. Ondrej DURAS, OSK"
 let COMMENTOR="#"
 let FOLDMARKS=70
 let EXTENSION=tolower(expand("%:e"))
@@ -339,10 +339,21 @@ function! DuryTSTAMP()
 endfunction
 
 nmap <f5> <esc>:call DuryTSTAMP()<cr>
-nmap <f6> <esc>:call DuryHead()<cr>
+nmap <s-f6> <esc>:call DuryHead()<cr>
+nmap <f6> <esc>:call Utf8()<cr>
 
 "###################################################################### }}} 1
-" CMD handling by F9 ################################################## {{{ 1
+" CMD handling by F9 / F10 ############################################ {{{ 1
+
+" Apply one (cursor line) command only.
+function! TypoCmdThis()
+  let CMDLINE='^'.g:COMMENTOR.'=cmd\s\+'
+  let LINE=getline('.')
+  if LINE =~ CMDLINE
+    let COMMAND=substitute(LINE,CMDLINE,'!','')
+    execute COMMAND
+  endif
+endfunction
 
 function! TypoCmdExec()
  let CMDCT=0
@@ -378,7 +389,7 @@ endfunction
 
 nmap <f9>   :call TypoCmdExec()<cr>
 nmap <s-f9> :call TypoCmdChck()<cr>
-
+nmap <f10>  :call TypoCmdThis()<cr>
 "###################################################################### }}} 1
 
 " --- end ---

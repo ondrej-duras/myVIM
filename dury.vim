@@ -2,12 +2,13 @@
 " DURY.VIM - My Personal VIM Configuration - Windows Version
 " 20140625, Ing. Ondrej DURAS (dury)
 " $VIM/dury.vim
-" VERSION=20170524
+" VERSION=2017.100501
+" VERSION=2021.021701
 "
 " Common Variables & Settings ######################################### {{{ 1
 
 "let AUTHOR="Ing. Ondrej DURAS, +421-2-692-57912  ATT"
-let AUTHOR="Ing. Ondrej DURAS, OSK"
+let AUTHOR="Ing. Ondrej DURAS, OSK 0905-012-888"
 let COMMENTOR="#"
 let FOLDMARKS=70
 let EXTENSION=tolower(expand("%:e"))
@@ -135,6 +136,7 @@ function! TypoConfigON()
 
  nmap <f1> :source $VIM/dury.vim<cr>
  nmap <f2> :call TypoKeyF2()<cr>
+ nmap <c-a>d :let @*=getcwd()<cr>
 endfunction
 
 
@@ -329,6 +331,8 @@ function! DuryHead()
  call append(2,g:COMMENTOR." ".DATE.", ".g:AUTHOR)
  call append(3,g:COMMENTOR." ".expand("%:p"))
  call append(4,g:COMMENTOR)
+ call append(5,g:COMMENTOR."=vim source $VIM/itn-dc.vim")
+ call append(6,g:COMMENTOR)
  call append(line("$"),g:COMMENTOR." --- end ---")
 endfunction
 

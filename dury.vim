@@ -3,7 +3,7 @@
 " 20140625, Ing. Ondrej DURAS (dury)
 " $VIM/dury.vim
 " VERSION=2017.100501
-" VERSION=2021.021701
+" VERSION=2021.032701
 "
 " Common Variables & Settings ######################################### {{{ 1
 
@@ -21,6 +21,8 @@ elseif EXTENSION=="ps" || EXTENSION=="eps"
     let COMMENTOR="%"
 elseif EXTENSION=="vim"
     let COMMENTOR='"'
+elseif EXTENSION=="cmd"
+    let COMMENTOR="::"
 endif
 
 
@@ -137,6 +139,7 @@ function! TypoConfigON()
  nmap <f1> :source $VIM/dury.vim<cr>
  nmap <f2> :call TypoKeyF2()<cr>
  nmap <c-a>d :let @*=getcwd()<cr>
+ nmap <c-a>g :let @*="cd " . getcwd() . "\n"<cr>
 endfunction
 
 

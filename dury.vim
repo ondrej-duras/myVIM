@@ -13,7 +13,7 @@ let COMMENTOR="#"
 let FOLDMARKS=70
 let EXTENSION=tolower(expand("%:e"))
 
-if EXTENSION=="cpp" || EXTENSION=="c" || EXTENSION=="pov"
+if EXTENSION=="cpp" || EXTENSION=="c" || EXTENSION=="pov" || EXTENSION=="pas" || EXTENSION=="js"
     let COMMENTOR="//"
 elseif EXTENSION=="s" || EXTENSION=="asm" || EXTENSION=="ini"
     let COMMENTOR=";"

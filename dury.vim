@@ -1,9 +1,16 @@
 "
 " DURY.VIM - My Personal VIM Configuration - Windows Version
-" 20140625, Ing. Ondrej DURAS (dury)
-" $VIM/dury.vim
-" VERSION=2017.100501
-" VERSION=2021.032701
+" 20140625, Ing. Ondrej DURAS (dury)  (T-Systems)
+" $VIM/dury.vim   _vimrc
+" VERSION=2017.100501 (Orange)
+" VERSION=2021.021701 (Orange)
+" VERSION=2023.012701 (Telekom)
+" VERSION=2023.050401 (Telekom) Folded cterm=none
+" VERSION=2024.020801 (Telekom) termguicolors
+" VERSION=2024.021401 (Telekom) COMMENTORs :: REM
+" VERSION=2024.082101 (Telekom) <F5> Cursorline-CursorColumn
+" VERSION=2024.102801 (Telekom) ...showcmd missing in TypoConfigON()
+" VERSION=2024.111502 (Telekom) F6PaperBlack & F6PaperWhite for Highlighted TextCopy
 "
 " Common Variables & Settings ######################################### {{{ 1
 
@@ -13,7 +20,7 @@ let COMMENTOR="#"
 let FOLDMARKS=70
 let EXTENSION=tolower(expand("%:e"))
 
-if EXTENSION=="cpp" || EXTENSION=="c" || EXTENSION=="pov" || EXTENSION=="pas" || EXTENSION=="js"
+if EXTENSION=="cpp" || EXTENSION=="c" || EXTENSION=="pov"
     let COMMENTOR="//"
 elseif EXTENSION=="s" || EXTENSION=="asm" || EXTENSION=="ini"
     let COMMENTOR=";"
@@ -23,6 +30,9 @@ elseif EXTENSION=="vim"
     let COMMENTOR='"'
 elseif EXTENSION=="cmd"
     let COMMENTOR="::"
+elseif EXTENSION=="bat"
+    let COMMENTOR="REM "
+    "^REM VIM ...
 endif
 
 
@@ -121,7 +131,8 @@ function! TypoConfigON()
  syntax on
  set ruler
  set nowrap
- language us_US
+ set showcmd
+ "language us_US
  set noautoindent
  set backspace=indent,eol,start
  set nocompatible
@@ -133,13 +144,16 @@ function! TypoConfigON()
 
  highlight Normal  ctermfg=grey     ctermbg=black
  highlight Search  ctermfg=yellow   ctermbg=darkred
- highlight Folded  ctermfg=darkcyan ctermbg=black
+ "highlight Folded  ctermfg=darkcyan ctermbg=black cterm=none
+ 
+ silent! set termguicolors
+ high Folded cterm=NONE ctermbg=NONE guibg=NONE guifg=#604020
+ high xfold  cterm=NONE ctermbg=NONE guibg=NONE guifg=#604020
  highlight Comment ctermfg=darkblue ctermbg=black
 
  nmap <f1> :source $VIM/dury.vim<cr>
  nmap <f2> :call TypoKeyF2()<cr>
  nmap <c-a>d :let @*=getcwd()<cr>
- nmap <c-a>g :let @*="cd " . getcwd() . "\n"<cr>
 endfunction
 
 
@@ -154,7 +168,7 @@ function! TypoConfigOFF()
  set clipboard=unnamed
  set foldmethod=manual
  normal zE
- language us_US
+ "language us_US
  redraw
  highlight Normal ctermfg=grey ctermbg=black
 endfunction
@@ -234,6 +248,16 @@ function! TypoKeyF1()
  call TypoMarkersON()
  call TypoEncryptedHide()
  call TypoVimExec()
+
+ " a word may contain following characters
+ set iskeyword+=-
+ set iskeyword+=.
+ set iskeyword+=:
+ set iskeyword+=_
+ set iskeyword+=[
+ set iskeyword+=]
+ set iskeyword+=\
+ set iskeyword+=/
 endfunction
 
 function! TypoKeyF2()
@@ -345,9 +369,90 @@ function! DuryTSTAMP()
  echo "Actual time ".TIMESTAMP." now in clipboard"
 endfunction
 
-nmap <f5> <esc>:call DuryTSTAMP()<cr>
-nmap <s-f6> <esc>:call DuryHead()<cr>
+
+
+
+" Utf8() resides in $VIM/_vimrc or ~/.vimrc
+" -------
+"" Slovencina, Rustina v GVIM
+"" :call Utf8()
+"" ftp://ftp.vim.org/pub/vim/pc/gvim73_46.zip
+"function! Utf8()
+"  set enc=utf-8
+"  set fileencoding=utf-8
+"  ""pre Rustinu
+"  "set guifont=Courier_New:h14:cRUSSIAN
+"  ""pre slovenske texty
+"  set guifont=Courier_New:h10:cRUSSIAN
+"  color desert
+"" !start osk.exe ... zavolanie vizualnej klavesnice
+"endfunction
+"
+"if has("gui_running")
+"  "UTF-8/RU and colorscheme
+"  call Utf8()
+"  "no menu, no toolbar & 140x40
+"  set guioptions-=T
+"  set guioptions-=m
+"  set columns=140 lines=40
+"endif
+"" --- end ---
+
+nmap <s-f5> <esc>:call DuryTSTAMP()<cr>
+"nmap <s-f6> <esc>:call DuryHead()<cr>
 nmap <f6> <esc>:call Utf8()<cr>
+" Utf8() resides in $VIM/_vimrc or ~/.vimrc
+
+
+"###################################################################### }}} 1
+" Handling F5 - cursorline/cursorcolumn ############################### {{{ 1
+
+" function shows and hides a CROSS on the screen
+
+let F5ATTRIB = 0
+set nocursorline
+set nocursorcolumn
+
+function! F5handling()
+  if g:F5ATTRIB == 0
+    let g:F5ATTRIB = 1
+    set cursorline
+    set cursorcolumn
+    set hlsearch
+  else
+    let g:F5ATTRIB = 0
+    set nocursorline
+    set nocursorcolumn
+    set nohlsearch
+  endif
+endfunction
+
+nmap <f5> :call F5handling()<cr>
+
+high cursorline cterm=NONE ctermbg=darkred guibg=NONE
+high cursorline cterm=underline ctermbg=NONE guibg=NONE
+high cursorcolumn ctermfg=white ctermbg=darkgrey guifg=#f0f0f0 guibg=#101010
+high visual ctermbg=yellow ctermfg=darkred guibg=#dd8800 guifg=#880000
+
+
+"###################################################################### }}} 1
+"## Handling s-F6 - F6PaperWhite ###################################### {{{ 1
+
+let F6PAPERWHITE = 0
+" 0 = Black 1 = White
+function! F6PaperWhite()
+  if g:F6PAPERWHITE == 0
+    let g:F6PAPERWHITE = 1
+    set mouse=""
+    high Normal ctermfg=0 guifg=#000000 ctermbg=7 guibg=white
+  else
+    let g:F6PAPERWHITE = 0
+    high Normal ctermfg=7 guifg=#e0e0e0 ctermbg=NONE guibg=NONE
+    set mouse=a
+  endif
+endfunction
+
+nmap <s-f6> <esc>:call F6PaperWhite()<cr>
 
 "###################################################################### }}} 1
 " CMD handling by F9 / F10 ############################################ {{{ 1
@@ -397,6 +502,7 @@ endfunction
 nmap <f9>   :call TypoCmdExec()<cr>
 nmap <s-f9> :call TypoCmdChck()<cr>
 nmap <f10>  :call TypoCmdThis()<cr>
+
 "###################################################################### }}} 1
 
 " --- end ---
